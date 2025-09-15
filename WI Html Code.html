@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wayne Industries — New‑Generation Web & Investment Platform</title>
+  <meta name="description" content="Wayne Industries builds modern websites and empowers businesses and creators to reinvest in themselves. Explore services, invest, and browse merch, music, and videos."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --black:#0b0e13;
+      --blue:#1672ff;
+      --blue-600:#0e53be;
+      --ink:#0f172a;
+      --slate:#94a3b8;
+      --card:#111827cc; /* translucent */
+      --glass:#0b0e1399;
+      --ring:#1d4ed8;
+      --muted:#0b1220;
+      --white:#f8fafc;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+      color:var(--white); background: radial-gradient(1200px 800px at 15% -10%, rgba(22,114,255,.24), transparent 60%), radial-gradient(900px 600px at 110% 10%, rgba(22,114,255,.18), transparent 60%), linear-gradient(180deg, #04070b, #070a10 25%, #0a0d14 60%, #06080d 100%);
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(180deg, rgba(7,10,16,0.9), rgba(7,10,16,0.6));
+      border-bottom:1px solid rgba(22,114,255,.18);
+    }
+    .nav{max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between; padding:14px 20px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{
+      width:40px; height:40px; border-radius:12px; background: linear-gradient(145deg, var(--blue), var(--blue-600));
+      box-shadow: inset 0 0 18px rgba(255,255,255,.15), 0 8px 20px rgba(22,114,255,.35);
+      display:grid; place-items:center; font-weight:800
+    }
+    .logo span{font-size:18px; letter-spacing:.5px}
+    .brand h1{font-size:18px; margin:0; font-weight:800; letter-spacing:.4px}
+    .brand small{display:block; color:var(--slate); font-weight:500; margin-top:2px}
+
+    .menu{display:flex; gap:20px; align-items:center}
+    .menu a{padding:8px 12px; border-radius:12px; color:#e6eefc}
+    .menu a:hover{background:rgba(22,114,255,.12)}
+    .cta{background: linear-gradient(145deg, var(--blue), #2d8bff); color:white; padding:10px 14px; border-radius:14px; font-weight:700; box-shadow: 0 8px 22px rgba(22,114,255,.35)}
+    .cta:hover{filter:brightness(1.08)}
+
+    /* Hero */
+    .hero{max-width:1200px; margin:0 auto; padding:60px 20px 40px; display:grid; grid-template-columns:1.2fr 1fr; gap:30px; align-items:center}
+    .kicker{color:#9fb7ff; font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:12px}
+    .headline{font-size:clamp(30px, 4vw, 56px); line-height:1.05; margin:10px 0 18px; font-weight:900}
+    .sub{color:#c6d3ee; font-size:clamp(14px, 1.2vw, 18px); max-width:60ch}
+    .hero-cta{margin-top:22px; display:flex; gap:14px; flex-wrap:wrap}
+    .btn{padding:12px 16px; border-radius:14px; border:1px solid rgba(22,114,255,.25); background:#0a1020; color:#eaf2ff; font-weight:700}
+    .btn.primary{background: linear-gradient(145deg, var(--blue), #2a7af8); border:none}
+    .hero-card{background:linear-gradient(180deg, rgba(17,24,39,.75), rgba(10,16,32,.65)); border:1px solid rgba(22,114,255,.18); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px}
+    .stat{background:#0b1220; border:1px solid rgba(22,114,255,.18); border-radius:16px; padding:14px; text-align:center}
+    .stat b{font-size:18px}
+    .stat span{display:block; color:#9fb0cc; font-size:12px; margin-top:4px}
+
+    /* Sections */
+    section{padding:64px 20px}
+    .wrap{max-width:1200px; margin:auto}
+    .section-title{font-size:28px; font-weight:900; margin:0 0 8px}
+    .section-sub{color:#b5c2da; margin:0 0 24px}
+
+    /* Services grid */
+    .grid{display:grid; gap:18px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    .card{background:linear-gradient(180deg, rgba(17,24,39,.7), rgba(5,9,18,.7)); border:1px solid rgba(22,114,255,.18); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow)}
+    .card h3{margin:0 0 8px}
+    .chip{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(22,114,255,.12); border:1px solid rgba(22,114,255,.25); color:#a8c6ff; font-size:12px; font-weight:700; letter-spacing:.04em}
+
+    /* Invest section */
+    .steps{counter-reset: step}
+    .step{position:relative; padding-left:56px; margin:16px 0}
+    .step::before{counter-increment:step; content: counter(step); position:absolute; left:0; top:0; width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:linear-gradient(145deg, var(--blue), #2a7af8); font-weight:800}
+
+    /* Creator Hub tabs (no JS) */
+    .tabs{display:grid; gap:14px}
+    .tab-controls{display:flex; gap:10px; flex-wrap:wrap}
+    .tab-controls a{padding:10px 14px; border-radius:12px; border:1px solid rgba(22,114,255,.25)}
+    .tab-controls a:hover{background:rgba(22,114,255,.1)}
+    .tab-panel{display:none}
+    .tab-panel:target{display:block}
+    #merch:target ~ .default, #music:target ~ .default, #videos:target ~ .default{display:none}
+
+    .media-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    .media-card{background:#0a1020; border:1px solid rgba(22,114,255,.18); border-radius:16px; overflow:hidden}
+    .media-thumb{aspect-ratio:16/9; background:linear-gradient(145deg, #0d1426, #0a1020); display:grid; place-items:center; color:#9fb7ff; font-weight:800}
+    .media-body{padding:14px}
+
+    /* Pricing */
+    .pricing{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .price{padding:24px; background:linear-gradient(180deg, rgba(12,20,40,.7), rgba(8,12,24,.7)); border:1px solid rgba(22,114,255,.2); border-radius:20px; position:relative}
+    .price .tag{position:absolute; top:14px; right:14px}
+    .price h4{margin:0 0 6px}
+    .price .big{font-size:34px; font-weight:900; margin:8px 0}
+    .price ul{margin:10px 0 0; padding:0 0 0 18px; color:#cbd5e1}
+
+    /* FAQ */
+    details{background:#0a1020; border:1px solid rgba(22,114,255,.18); border-radius:14px; padding:12px 14px}
+    details+details{margin-top:10px}
+    summary{cursor:pointer; font-weight:700}
+
+    /* Contact */
+    form{display:grid; gap:12px; max-width:720px}
+    input, textarea, select{background:#0a0f1f; border:1px solid rgba(22,114,255,.25); color:#e6eefc; padding:12px 14px; border-radius:12px; font:inherit}
+    textarea{min-height:130px}
+    input:focus, textarea:focus, select:focus{outline:2px solid var(--ring); outline-offset:2px}
+
+    /* Footer */
+    footer{background:#060910; border-top:1px solid rgba(22,114,255,.18)}
+    .footer{max-width:1200px; margin:auto; padding:28px 20px; display:grid; grid-template-columns:2fr 1fr 1fr; gap:18px}
+    .small{color:#a0b4d6; font-size:14px}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr; text-align:center}
+      .hero-card{order:-1}
+      .stats{grid-template-columns:repeat(3,1fr)}
+      .grid.cols-3{grid-template-columns:1fr 1fr}
+      .grid.cols-2{grid-template-columns:1fr}
+      .pricing{grid-template-columns:1fr}
+      .media-grid{grid-template-columns:1fr 1fr}
+      .footer{grid-template-columns:1fr}
+      .menu{display:none}
+    }
+    @media (max-width: 560px){
+      .stats{grid-template-columns:1fr 1fr 1fr}
+      .media-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Nav -->
+  <header aria-label="Primary navigation">
+    <nav class="nav">
+      <a class="brand" href="#top" aria-label="Wayne Industries home">
+        <div class="logo" aria-hidden="true"><span>WI</span></div>
+        <div>
+          <h1>Wayne Industries</h1>
+          <small>Web • Invest • Create</small>
+        </div>
+      </a>
+      <div class="menu" role="menubar">
+        <a role="menuitem" href="#services">Services</a>
+        <a role="menuitem" href="#invest">Invest</a>
+        <a role="menuitem" href="#hub">Creator Hub</a>
+        <a role="menuitem" href="#pricing">Pricing</a>
+        <a role="menuitem" href="#contact" class="cta">Get Started</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <main id="top" class="hero">
+    <div>
+      <div class="kicker">Next‑Gen Platform</div>
+      <h2 class="headline">We build high‑impact websites and a platform for businesses to reinvest in themselves.</h2>
+      <p class="sub">Wayne Industries combines premium web design with a professional marketplace where partners can showcase merchandise, music, and videos. Future‑ready, secure, and user‑friendly for customers and creators.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#contact">Start your project</a>
+        <a class="btn" href="#invest">Explore reinvestment</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>100%+</b><span>Responsive & Accessible</span></div>
+        <div class="stat"><b>SEO</b><span>Built‑in best practices</span></div>
+        <div class="stat"><b>Secure</b><span>Modern standards</span></div>
+      </div>
+    </div>
+    <aside class="hero-card" aria-label="Highlights">
+      <div class="chip">Black & Blue Aesthetic</div>
+      <h3 style="margin:12px 0 8px">Professional. Fast. Future‑Proof.</h3>
+      <p class="small">From concept to launch, we craft polished sites that convert. Our creator hub lets artists and brands sell merchandise, publish tracks, and premiere videos in a central experience.</p>
+      <ul class="small" style="margin:10px 0 0; padding-left:18px">
+        <li>Clean UI with enterprise‑grade polish</li>
+        <li>Content‑first layouts and motion‑ready components</li>
+        <li>No‑code friendly updates post‑launch</li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- Services -->
+  <section id="services" aria-labelledby="services-title">
+    <div class="wrap">
+      <h2 id="services-title" class="section-title">Services that move businesses forward</h2>
+      <p class="section-sub">Full‑stack web creation with the right mix of strategy, design, and performance.</p>
+      <div class="grid cols-3">
+        <article class="card">
+          <div class="chip">Websites</div>
+          <h3>Custom Website Design</h3>
+          <p>Tailored, mobile‑first sites that load fast and look stunning. Built with accessibility and conversion in mind.</p>
+        </article>
+        <article class="card">
+          <div class="chip">Brand</div>
+          <h3>Branding & Identity</h3>
+          <p>Logo systems, color and typography, and brand kits that scale across channels and campaigns.</p>
+        </article>
+        <article class="card">
+          <div class="chip">SEO</div>
+          <h3>SEO & Content</h3>
+          <p>On‑page structure, metadata, and content calendars to boost discoverability and search ranking.</p>
+        </article>
+        <article class="card">
+          <div class="chip">Commerce</div>
+          <h3>E‑commerce Setup</h3>
+          <p>Catalogs, carts, payments, and fulfillment flows prepared for growth and internationalization.</p>
+        </article>
+        <article class="card">
+          <div class="chip">Care</div>
+          <h3>Maintenance & Support</h3>
+          <p>Updates, uptime monitoring, and proactive improvements so your site keeps delivering.</p>
+        </article>
+        <article class="card">
+          <div class="chip">Strategy</div>
+          <h3>Analytics & Growth</h3>
+          <p>Dashboards and insights to guide decisions—turn traffic into loyal customers.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Invest -->
+  <section id="invest" aria-labelledby="invest-title">
+    <div class="wrap">
+      <h2 id="invest-title" class="section-title">Invest in Yourself — The Wayne Way</h2>
+      <p class="section-sub">A transparent, guided pathway for businesses and creators to reinvest profits into growth.</p>
+
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>How the platform works</h3>
+          <div class="steps">
+            <div class="step">
+              <b>Join</b>
+              <p class="small">Create a partner profile and verify your brand or artist identity.</p>
+            </div>
+            <div class="step">
+              <b>Publish</b>
+              <p class="small">List merchandise, upload music, and schedule video releases.</p>
+            </div>
+            <div class="step">
+              <b>Reinvest</b>
+              <p class="small">Allocate a percentage of sales to marketing, production, or web enhancements.</p>
+            </div>
+            <div class="step">
+              <b>Grow</b>
+              <p class="small">Track performance and compound momentum with evidence‑based decisions.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Why it works</h3>
+          <ul class="small" style="margin:8px 0 0; padding-left:18px">
+            <li>Aligned incentives: creators earn and scale; customers get premium experiences.</li>
+            <li>Clear goals: set reinvestment targets and milestones you can act on.</li>
+            <li>Shared spotlight: featured launches and curated collections drive discovery.</li>
+          </ul>
+          <div style="margin-top:14px">
+            <a href="#contact" class="btn primary">Become a Partner</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Creator Hub -->
+  <section id="hub" aria-labelledby="hub-title">
+    <div class="wrap">
+      <h2 id="hub-title" class="section-title">Creator Hub — Merch, Music, & Videos</h2>
+      <p class="section-sub">A dedicated space to browse merchandise, listen to tracks, and watch premieres from various artists.</p>
+
+      <div class="tabs">
+        <nav class="tab-controls" aria-label="Hub categories">
+          <a href="#merch" class="btn">Merchandise</a>
+          <a href="#music" class="btn">Music</a>
+          <a href="#videos" class="btn">Videos</a>
+        </nav>
+
+        <!-- Default helper text when no tab is targeted -->
+        <div class="default small">Select a category to explore featured drops.</div>
+
+        <!-- Merch Panel -->
+        <div id="merch" class="tab-panel" aria-label="Merchandise">
+          <div class="media-grid">
+            <article class="media-card">
+              <div class="media-thumb">TEE</div>
+              <div class="media-body">
+                <b>Signature Tee</b>
+                <p class="small">Classic black with blue emblem. Sizes XS‑XXL.</p>
+                <a class="btn" href="#contact">Enquire</a>
+              </div>
+            </article>
+            <article class="media-card">
+              <div class="media-thumb">CAP</div>
+              <div class="media-body">
+                <b>Monogram Cap</b>
+                <p class="small">Adjustable fit, breathable weave, stealth logo.</p>
+                <a class="btn" href="#contact">Enquire</a>
+              </div>
+            </article>
+            <article class="media-card">
+              <div class="media-thumb">HOODIE</div>
+              <div class="media-body">
+                <b>Gradient Hoodie</b>
+                <p class="small">Mid‑weight fleece, blue‑to‑ink gradient print.</p>
+                <a class="btn" href="#contact">Enquire</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Music Panel -->
+        <div id="music" class="tab-panel" aria-label="Music">
+          <div class="media-grid">
+            <article class="media-card">
+              <div class="media-thumb">EP</div>
+              <div class="media-body">
+                <b>Neon Nights (EP)</b>
+                <p class="small">Stream a 30‑sec preview or request a license.</p>
+                <a class="btn" href="#contact">Preview</a>
+              </div>
+            </article>
+            <article class="media-card">
+              <div class="media-thumb">SINGLE</div>
+              <div class="media-body">
+                <b>Blue Shift</b>
+                <p class="small">High‑energy single for launch reels and ads.</p>
+                <a class="btn" href="#contact">Preview</a>
+              </div>
+            </article>
+            <article class="media-card">
+              <div class="media-thumb">ALBUM</div>
+              <div class="media-body">
+                <b>Midnight Circuit</b>
+                <p class="small">Atmospheric set for focus and deep work.</p>
+                <a class="btn" href="#contact">Preview</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Videos Panel -->
+        <div id="videos" class="tab-panel" aria-label="Videos">
+          <div class="media-grid">
+            <article class="media-card">
+              <div class="media-thumb">MV</div>
+              <div class="media-body">
+                <b>Launch Trailer</b>
+                <p class="small">Cinematic reveal for an upcoming drop.</p>
+                <a class="btn" href="#contact">Watch</a>
+              </div>
+            </article>
+            <article class="media-card">
+              <div class="media-thumb">LIVE</div>
+              <div class="media-body">
+                <b>Studio Session</b>
+                <p class="small">Behind‑the‑scenes with featured artists.</p>
+                <a class="btn" href="#contact">Watch</a>
+              </div>
+            </article>
+            <article class="media-card">
+              <div class="media-thumb">DOC</div>
+              <div class="media-body">
+                <b>Origin Story</b>
+                <p class="small">Short doc on the Wayne Industries ethos.</p>
+                <a class="btn" href="#contact">Watch</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <h2 id="pricing-title" class="section-title">Simple, transparent pricing</h2>
+      <p class="section-sub">Flexible options for startups, growing brands, and established enterprises.</p>
+
+      <div class="pricing">
+        <div class="price">
+          <span class="chip tag">Starter</span>
+          <h4>Launch Site</h4>
+          <div class="big">R4 999</div>
+          <p class="small">Perfect for a clean, single‑page presence.</p>
+          <ul>
+            <li>Single‑page site</li>
+            <li>Mobile‑first layout</li>
+            <li>Basic SEO setup</li>
+          </ul>
+          <div style="margin-top:14px"><a class="btn" href="#contact">Choose Starter</a></div>
+        </div>
+        <div class="price" style="border-color:#2d8bff">
+          <span class="chip tag">Most Popular</span>
+          <h4>Business</h4>
+          <div class="big">R12 999</div>
+          <p class="small">Multi‑section site with blog or gallery.</p>
+          <ul>
+            <li>Up to 8 pages/sections</li>
+            <li>Enhanced SEO & analytics</li>
+            <li>CMS‑ready architecture</li>
+          </ul>
+          <div style="margin-top:14px"><a class="btn primary" href="#contact">Choose Business</a></div>
+        </div>
+        <div class="price">
+          <span class="chip tag">Pro</span>
+          <h4>Commerce</h4>
+          <div class="big">R22 999+</div>
+          <p class="small">Online store and creator hub integrations.</p>
+          <ul>
+            <li>Product catalog setup</li>
+            <li>Payments & shipping flow</li>
+            <li>Performance optimization</li>
+          </ul>
+          <div style="margin-top:14px"><a class="btn" href="#contact">Choose Commerce</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section aria-labelledby="faq-title">
+    <div class="wrap">
+      <h2 id="faq-title" class="section-title">Frequently asked questions</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <details>
+            <summary>Do you only build in black & blue?</summary>
+            <p class="small">We love the Wayne palette, but every project can use its own brand system. The design process is flexible.</p>
+          </details>
+          <details>
+            <summary>Can we add a blog or CMS later?</summary>
+            <p class="small">Yes. We structure content so you can migrate to a CMS with minimal rework.</p>
+          </details>
+          <details>
+            <summary>Can artists monetize directly?</summary>
+            <p class="small">Yes. The Creator Hub supports merch listings and media showcases, with pathways for direct sales integrations.</p>
+          </details>
+        </div>
+        <div class="card">
+          <details>
+            <summary>What about performance and SEO?</summary>
+            <p class="small">We focus on clean markup, semantic structure, and speed, then layer metadata and content for ranking.</p>
+          </details>
+          <details>
+            <summary>Do you offer maintenance?</summary>
+            <p class="small">Absolutely. We provide care plans with updates, backups, and ongoing improvements.</p>
+          </details>
+          <details>
+            <summary>Where are you based?</summary>
+            <p class="small">We work with clients globally and schedule support in your time zone.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <h2 id="contact-title" class="section-title">Let's build something powerful</h2>
+      <p class="section-sub">Tell us about your project or request partner access to the reinvestment platform.</p>
+      <form aria-label="Contact form" action="#" method="post" onsubmit="return false">
+        <div class="grid cols-2">
+          <label>
+            <span class="small">Full Name</span>
+            <input name="name" type="text" placeholder="Bruce Wayne" required />
+          </label>
+          <label>
+            <span class="small">Email</span>
+            <input name="email" type="email" placeholder="you@company.com" required />
+          </label>
+        </div>
+        <div class="grid cols-2">
+          <label>
+            <span class="small">Company / Artist</span>
+            <input name="company" type="text" placeholder="Wayne Enterprises" />
+          </label>
+          <label>
+            <span class="small">Service</span>
+            <select name="service">
+              <option>Website Design</option>
+              <option>Branding</option>
+              <option>SEO & Content</option>
+              <option>E‑commerce</option>
+              <option>Creator Hub Partner</option>
+            </select>
+          </label>
+        </div>
+        <label>
+          <span class="small">Project Details</span>
+          <textarea name="details" placeholder="Goals, timeline, links…"></textarea>
+        </label>
+        <div>
+          <button class="btn primary" type="submit">Send Message</button>
+          <span class="small" style="margin-left:10px">By submitting, you agree to our terms.</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer">
+      <div>
+        <div class="brand">
+          <div class="logo" aria-hidden="true"><span>WI</span></div>
+          <div>
+            <h3 style="margin:0">Wayne Industries</h3>
+            <small>New‑Generation Platform</small>
+          </div>
+        </div>
+        <p class="small" style="margin-top:10px">Designing high‑impact websites and empowering businesses and artists to reinvest and grow.</p>
+      </div>
+      <div>
+        <b>Explore</b>
+        <ul class="small" style="list-style:none; padding:0; margin:10px 0 0">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#invest">Invest</a></li>
+          <li><a href="#hub">Creator Hub</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <b>Contact</b>
+        <ul class="small" style="list-style:none; padding:0; margin:10px 0 0">
+          <li><a href="#contact">Start a project</a></li>
+          <li><a href="mailto:hello@wayneindustries.co">hello@wayneindustries.co</a></li>
+          <li>© <span id="y"></span> Wayne Industries</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set year non-intrusively (allowed small JS; remove if strictly HTML/CSS only)
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
